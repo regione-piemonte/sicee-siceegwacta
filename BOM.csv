@@ -1,0 +1,67 @@
+name@version *,license *,copyrights *,end-of-support,dependencies,language,repository,email,URL
+actasrv-client-3.5.0.jar,Apache-2.0; MIT (Rilasciata da CSI Piemonte su richiesta),-,-,-,Java,-,-,-
+actasrv-client13-3.5.0.jar,Apache-2.0; MIT (Rilasciata da CSI Piemonte su richiesta),-,-,-,Java,-,-,-
+activation-1.0.2.jar,CDDL-1.0,-,-,-,Java,-,-,-
+anpr-client-cxf-1.0.0.jar,Apache-2.0; MIT (Rilasciata da CSI Piemonte su richiesta),-,-,-,Java,-,-,-
+anprcommonlib-client-1.0.0.jar,Apache-2.0; MIT (Rilasciata da CSI Piemonte su richiesta),-,-,-,Java,-,-,-
+anprtest-client-cxf-1.0.0.jar,Apache-2.0; MIT (Rilasciata da CSI Piemonte su richiesta),-,-,-,Java,-,-,-
+axis-1.4.csi-1.0.0.jar,Libreria personalizzata CSI basata su Apache-2.0,-,-,-,Java,-,-,-
+axis-jaxrpc-1.4.jar,Apache-2.0,-,-,-,Java,-,-,-
+commons-codec-1.7.jar,Apache-2.0,-,-,-,Java,-,-,-
+commons-collections-3.2.1.jar,Apache-2.0,-,-,-,Java,-,-,-
+commons-discovery-0.2.jar,Apache-1.1,-,-,-,Java,-,-,-
+commons-httpclient-2.0.2.jar,Apache-2.0,-,-,-,Java,-,-,-
+commons-lang-2.6.jar,Apache-2.0,-,-,-,Java,-,-,-
+commons-logging-1.1.3.jar,Apache-2.0,-,-,-,Java,-,-,-
+commons-logging-api-1.1.jar,Apache-2.0,-,-,-,Java,-,-,-
+coop-diag-1.2.1.jar,Apache-2.0; MIT (Rilasciata da CSI Piemonte su richiesta),CSI-Piemonte,-,-,Java,-,-,-
+csi-apachesoap-1.4.5.jar,Apache-2.0; MIT (Rilasciata da CSI Piemonte su richiesta),CSI-Piemonte,-,-,Java,-,-,-
+csi-core-1.4.5.jar,Apache-2.0; MIT (Rilasciata da CSI Piemonte su richiesta),CSI-Piemonte,-,-,Java,-,-,-
+csi-ejb-1.4.5.jar,Apache-2.0; MIT (Rilasciata da CSI Piemonte su richiesta),CSI-Piemonte,-,-,Java,-,-,-
+csi-ejb-weblogic-1.4.5.jar,Apache-2.0; MIT (Rilasciata da CSI Piemonte su richiesta),CSI-Piemonte,-,-,Java,-,-,-
+csi-rmi-1.4.5.jar,Apache-2.0; MIT (Rilasciata da CSI Piemonte su richiesta),CSI-Piemonte,-,-,Java,-,-,-
+csi-stadapter-1.4.5.jar,Apache-2.0; MIT (Rilasciata da CSI Piemonte su richiesta),CSI-Piemonte,-,-,Java,-,-,-
+csi-tools-1.4.5.jar,Apache-2.0; MIT (Rilasciata da CSI Piemonte su richiesta),CSI-Piemonte,-,-,Java,-,-,http://opensource.org/licenses/BSD-3-Clause
+cxf-2.7.7.jar,Apache-2.0,-,-,-,Java,-,-,-
+dom-1.0.jar,Apache-2.0,-,-,-,Java,-,-,-
+dosign-common-2.0.0.jar,Apache-2.0; MIT (Rilasciata da CSI Piemonte su richiesta),-,-,-,Java,-,-,-
+ejb-2.1.jar,Libreria Java di Base,-,-,-,Java,-,-,-
+geronimo-javamail_1.4_spec-1.7.1.jar,Apache-2.0,-,-,-,Java,-,-,-
+gson-2.2.4.jar,Apache-2.0,-,-,-,Java,-,-,-
+hibernate-jpa-2.1-api-1.0.0.Final.jar,EPL-1.0; EDL-1.0,-,-,-,Java,-,-,-
+htmpl-1.3.2.jar,Apache-2.0; MIT (Rilasciata da CSI Piemonte su richiesta),CSI-Piemonte,-,-,Java,-,-,-
+jaas-1.0.jar,Libreria Java di Base,-,-,-,Java,-,-,https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
+jakarta-oro-2.0.8.jar,Apache-2.0,-,-,-,Java,-,-,http://svn.apache.org/repos/asf/tiles/framework/tags/tiles-parent-3.0.5/OGNL-LICENSE.txt
+jax-qname-1.0.jar,CDDL-1.1,-,-,-,Java,-,-,-
+jaxb-api-2.2.6.jar,CDDL-1.1; GPL-2.0 w/ CPE,-,-,-,Java,-,-,https://glassfish.java.net/public/CDDL+GPL_1_1.html
+jaxp-1.2.2.jar,Libreria Java di Base,-,-,-,Java,-,-,-
+jboss-annotations-api_1.1_spec-1.0.1.Final-redhat-3.jar,CDDL; GPL-2.0,-,-,-,Java,-,-,https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
+jboss-ejb-api_3.1_spec-1.0.2.Final-redhat-2.jar,CDDL-1.0; GPL-2.0 w/ CPE,-,-,-,Java,-,-,http://repository.jboss.org/licenses/cddl.txt; http://repository.jboss.org/licenses/gpl-2.0-ce.txt
+jboss-ejb3-ext-api-2.1.0.redhat-1.jar,CC0,-,-,-,Java,-,-,-
+jboss-interceptors-api_1.1_spec-1.0.1.Final-redhat-2.jar,CDDL-1.0; GPL-2.0 w/ CPE,-,-,-,Java,-,-,http://repository.jboss.org/licenses/cddl.txt; http://repository.jboss.org/licenses/gpl-2.0-ce.txt
+jms-1.0.2b.jar,Libreria Java di Base,-,-,-,Java,-,-,-
+jndi-1.2.1.jar,Libreria Java di Base,-,-,-,Java,-,-,-
+jta-1.0.1.jar,Libreria Java di Base,-,-,-,Java,-,-,-
+junit-4.7.jar,CPL-1.0,-,-,-,Java,-,-,-
+log4j-1.2.15.jar,Apache-2.0,-,-,-,Java,-,-,-
+mail-1.2.jar,Libreria Java di Base,-,-,-,Java,-,-,-
+modolpdfgeneratorsrv-client-1.2.0.jar,Apache-2.0; MIT (Rilasciata da CSI Piemonte su richiesta),-,-,-,Java,-,-,-
+modolsrv-client-1.5.0.jar,Apache-2.0; MIT (Rilasciata da CSI Piemonte su richiesta),-,-,-,Java,-,-,-
+msgadp-jaxb-1.0.1.jar,Apache-2.0; MIT (Rilasciata da CSI Piemonte su richiesta),CSI-Piemonte,-,-,Java,-,-,-
+msgadp-jaxb-tools-1.0.1.jar,Apache-2.0; MIT (Rilasciata da CSI Piemonte su richiesta),CSI-Piemonte,-,-,Java,-,-,-
+neethi-3.0.2.jar,Apache-2.0,-,-,-,Java,-,-,-
+postgresql-9.1-903.jdbc4.jar,BSD 2-clause "Simplified" License,-,-,-,Java,-,-,-
+sax-2.0.jar,Libreria Java di Base,-,-,-,Java,-,-,-
+servlet-2.4.jar,CDDL; GPL-2.0,-,-,-,Java,-,-,-
+soap-2.3.1.jar,Libreria Java di Base,-,-,-,Java,-,-,-
+stax2-api-3.1.1.jar,BSD-2-Clause,-,-,-,Java,-,-,-
+util-perf-1.0.0.jar,Apache-2.0; MIT (Rilasciata da CSI Piemonte su richiesta),CSI-Piemonte,-,-,Java,-,-,-
+velocity-1.7-dep.jar,Apache-2.0,-,-,-,Java,-,-,-
+velocity-1.7.jar,Apache-2.0,-,-,-,Java,-,-,-
+woodstox-core-asl-4.2.0.jar,Apache-2.0,-,-,-,Java,-,-,-
+wsdl4j-1.6.3.jar,CPL-1.0,-,-,-,Java,-,-,-
+xalan-2.3.1.jar,Apache-2.0,-,-,-,Java,-,-,-
+xerces-1.4.4.jar,Apache-2.0,-,-,-,Java,-,-,-
+xercesImpl-2.0.1.jar,Apache-2.0,-,-,-,Java,-,-,-
+xmlschema-core-2.0.3.jar,Apache-2.0,-,-,-,Java,-,-,-
+xsltc-2.3.1.jar,Apache-2.0,-,-,-,Java,-,-,-

@@ -1,0 +1,17 @@
+<!--
+    SPDX-License-Identifier: EUPL-1.2
+    Copyright Regione Piemonte - 2020
+ -->
+<datasources xmlns="http://www.jboss.org/ironjacamar/schema">
+  <datasource jndi-name="java:/SICEEGWACTA_DS" pool-name="SICEEGWACTAPool" enabled="true" use-ccm="false">
+      <connection-url>@@@@SICEEGWACTA_DB_URL@@@@</connection-url>
+      <driver>oracle</driver>
+      <pool>
+          <max-pool-size>20</max-pool-size>
+      </pool>
+      <security>
+          <user-name>@@@@SICEEGWACTA_DB_USER@@@@</user-name>
+          <password>@@@@SICEEGWACTA_DB_PWD@@@@</password>
+      </security>
+  </datasource>
+</datasources>

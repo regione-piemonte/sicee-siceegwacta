@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    SPDX-License-Identifier: EUPL-1.2
+    Copyright Regione Piemonte - 2020
+ -->
+
+<!-- build.xml file per compilazione, rilascio e deploy. Per una lista completa 
+	dei tasks eseguibili usare l'argomento di ant -projecthelp quando si richiama 
+	questo build.xml. -->
+
+<project name="sicee.siceegwacta" xmlns:ivy="antlib:fr.jayasoft.ivy.ant"
+	default="default" basedir=".">
+	<description>Build file di progetto</description>
+
+	<echo message="Loading build properties..." />
+	<property file="buildfiles/build.properties" />
+	<property file="buildfiles/build.locale.properties" />
+	<property file="buildfiles/${target}.properties" />
+
+	<path id="library.ref">
+		<fileset dir="${lib}">
+			<include name="**/*.jar" />
+			<include name="**/*.zip" />
+		</fileset>
+	</path>
+
+
+	<target name="default"
+		description="Eseguire il build per 
+		l'environment specificato a linea di comando con -Dtarget=${target}
+		o per tutti gli environment (se non specificato).">
+
+		<condition property="first-call" value="distribution">
+			<not>
+				<equals arg1="${target}" arg2="$${target}" />
+			</not>
+		</condition>
+
+		<condition property="first-call" value="all-targets">
+			<equals arg1="${target}" arg2="$${target}" />
+		</condition>
+
+		<echo message="target: ${target}" />
+		<echo message="first-call: ${first-call}" />
+
+		<antcall target="clean-all" />
+		<antcall target="${first-call}" />
+	</target>
+
+	<target name="all-targets"
+		description="Esegue il build per le varie distribuzioni in sequenza.">
+
+		<antcall target="distribution">
+			<param name="target" value="dev-rp-01" />
+		</antcall>
+
+		<antcall target="distribution">
+			<param name="target" value="tst-rp-01" />
+		</antcall>
+
+		<antcall target="distribution">
+			<param name="target" value="coll-rp-01" />
+		</antcall>
+
+		<antcall target="distribution">
+			<param name="target" value="prod-rp-01" />
+		</antcall>
+		<!--PROTECTED REGION END -->
+	</target>
+
+	<target name="distribution" description="Costruisce il tar per la distribuzione."
+		depends="package-ear">
+		<tar tarfile="${dist}/${target}/siceegwacta-${version}.tar"
+			basedir="${build}/archives/${target}" includes="siceegwacta.ear">
+			<tarfileset dir="buildfiles">
+				<include name="readme.txt" />
+			</tarfileset>
+		</tar>
+	</target>
+
+	<target name="resolve-dependencies" description="carica le librerie dal repository remoto">
+		<ivy:configure file="buildfiles/ivyconf.xml" />
+		<ivy:resolve file="buildfiles/ivy.xml" />
+	</target>
+
+	<!-- caricamento delle dipendenze mediante Ivy 2.0.0 in conformita' con 
+		le Linee Guida Build V05 -->
+	<target name="load-dependencies" depends="clean-cache, resolve-dependencies"
+		description="Risolve le dipendenze esterne.">
+		<ivy:retrieve pattern="lib/[artifact].[type]" />
+
+		<copy todir="lib">
+			<fileset file="conf/lib-tmp/*.jar" />
+		</copy>
+	</target>
+
+	<target name="init" description="Inizializza lo script Ant.">
+		<tstamp />
+		<condition property="target" value="dev">
+			<equals arg1="${target}" arg2="$${target}" />
+		</condition>
+		<mkdir dir="${build}/classes" />
+
+		<mkdir dir="${build}/temp/${target}/lib" />
+		<mkdir dir="${build}/archives/${target}" />
+
+		<mkdir dir="${dist}/${target}" />
+		<mkdir dir="${build}/javadoc" />
+		<mkdir dir="${build}/jsp" />
+	</target>
+
+	<target name="clean-all" description="Rimuove tutte le cartelle temporanee."
+		depends="clean-archives, clean-classes, clean-javadoc, clean-temp" />
+
+	<target name="clean-cache" description="Rimuove la cartella di cache di Ivy e la lib.">
+		<delete dir="${build}/cache" />
+		<delete dir="lib" />
+	</target>
+
+	<target name="clean-temp"
+		description="Rimuove la cartella dei files temporanei di build.">
+		<delete dir="${temp}" />
+	</target>
+
+
+	<target name="clean-archives"
+		description="Rimuove la cartella degli archivi (war, ear, ...).">
+		<delete dir="${build}/archives" />
+	</target>
+
+	<target name="clean-dist" description="Rimuove la cartella delle distribuzioni.">
+		<delete dir="${dist}" />
+	</target>
+
+	<target name="clean-classes" description="Rimuove la cartella dei sorgenti compilati.">
+		<delete dir="${build}/classes" />
+		<delete dir="lib" />
+	</target>
+
+
+	<target name="clean-javadoc" description="Rimuove la cartella temporanea dei javadoc.">
+		<delete dir="${build}/javadoc" />
+	</target>
+
+	<target name="compile-all" description="Compila tutti i sorgenti."
+		depends="init, load-dependencies">
+
+
+		<echo>Java/JVM version: ${ant.java.version}</echo>
+		<echo>Java/JVM detail version: ${java.version}</echo>
+
+		<mkdir dir="${build}/classes" />
+
+		<javac srcdir="${src}/java" destdir="${build}/classes" optimize="on"
+			deprecation="on" compiler="modern" debug="on" debuglevel="lines,vars,source"
+			source="1.6" target="1.6">
+			<classpath refid="library.ref" />
+		</javac>
+
+		<javac srcdir="${test}/java" destdir="${build}/classes"
+			optimize="on" deprecation="on" compiler="modern" debug="on"
+			debuglevel="lines,vars,source" source="1.6" target="1.6">
+			<classpath refid="library.ref" />
+		</javac>
+
+		<copy todir="${build}/classes">
+			<fileset dir="${src}/java" excludes="**/*.java*,**/*.jbx*" />
+		</copy>
+
+		<copy todir="${build}/classes">
+			<fileset dir="${test}/java" excludes="**/*.java*,**/*.jbx*" />
+		</copy>
+
+	</target>
+
+	<target name="_package-jar" depends="compile-all">
+
+		<copy todir="${build}/classes">
+			<fileset file="${conf}/ejb/*.properties" />
+		</copy>
+
+		<!--copy file="${conf}/ejb/server-${target}.jks" tofile="${build}/classes/server.jks"/ -->
+
+
+		<!-- Copia dei wsdl -->
+		<!--copy todir="${build}/classes"> <fileset dir="${conf}/wsdl/${target}/" 
+			/> </copy -->
+
+		<!-- Copia degli xsd del ministero -->
+		<!--copy todir="${build}/classes"> <fileset dir="${conf}/xsd/${target}/" 
+			/> </copy -->
+
+
+
+		<copy todir="${build}/classes">
+			<fileset dir="${conf}/ejb/siceegwacta/" />
+		</copy>
+
+		<copy todir="${build}/archives/${target}">
+			<fileset dir="${conf}/tar/" />
+		</copy>
+
+		<replace dir="${build}/classes">
+			<replacefilter token="@ambiente@" value="${target}" />
+		</replace>
+
+		<!--
+		<replace file="${build}/archives/${target}/siceegwacta-ds.xml"
+			token="@@@@SICEEGWACTA_DB_URL@@@@" value="${SICEEGWACTA_DB_URL}" />
+
+		<replace file="${build}/archives/${target}/siceegwacta-ds.xml"
+			token="@@@@SICEEGWACTA_DB_USER@@@@" value="${SICEEGWACTA_DB_USER}" />
+
+		<replace file="${build}/archives/${target}/siceegwacta-ds.xml"
+			token="@@@@SICEEGWACTA_DB_PWD@@@@" value="${SICEEGWACTA_DB_PWD}" />
+		-->
+		
+		<replace dir="${build}/classes" token="@sicee.siceeorch.siceeorch.pa.url@" value="${sicee.siceeorch.siceeorch.pa.url}" />
+
+		<!-- REPLACE PER MAIL -->
+		<replace dir="${build}/classes" token="@mail.host@" value="${mail.host}" />
+		<replace dir="${build}/classes" token="@mail.port@" value="${mail.port}" />
+		<replace dir="${build}/classes" token="@siceews.url@" value="${siceews.url}" />
+
+		<!-- REPLACE PER MAIL -->
+
+		<!-- REPLACE PER ACTA -->
+		<replace dir="${build}/classes" token="@acta.host@" value="${acta.host}" />
+		<replace dir="${build}/classes" token="@acta.port@" value="${acta.port}" />
+		<replace dir="${build}/classes" token="@acta.context@" value="${acta.context}" />
+		<!-- REPLACE PER ACTA -->
+
+		<!-- CARICAMENTO -->
+		<!--replace dir="${build}/classes" token="@wsape.cancellazione.endpoint@" 
+			value="${wsape.cancellazione.endpoint}"/ -->
+		<!--replace dir="${build}/classes" token="@wsape.cancellazione.qname@" 
+			value="${wsape.cancellazione.qname}"/ -->
+
+		<!-- CANCELLAZIONE -->
+		<!--replace dir="${build}/classes" token="@wsape.caricamento.endpoint@" 
+			value="${wsape.caricamento.endpoint}"/ -->
+
+		<!--replace dir="${build}/classes" token="@wsape.caricamento.qname@" value="${wsape.caricamento.qname}"/ -->
+
+
+
+		<!-- KEYSTORE PASSWORD -->
+		<!--replace dir="${build}/classes" token="@keystore-siape-password@" value="${keystore-siape-password}"/ -->
+		<!-- KEYSTORE ALIAS -->
+		<!--replace dir="${build}/classes" token="@keystore-siape-alias@" value="${keystore-siape-alias}"/ -->
+
+
+		<!-- TEST -->
+		<replace dir="${build}/classes" token="@anpr.test.endpoint@"
+			value="${anpr.test.endpoint}" />
+		<replace dir="${build}/classes" token="@anpr.test.qname@"
+			value="${anpr.test.qname}" />
+
+		<jar destfile="${build}/archives/${target}/siceegwacta.jar"
+			basedir="${build}/classes">
+			<manifest>
+				<attribute name="Dependencies"
+					value="org.jboss.ws.cxf.jbossws-cxf-client services,org.apache.cxf.impl,org.apache.ws.security,org.opensaml,org.apache.commons.codec,org.joda.time,javax.api,javax.xml.rpc.api,org.apache.commons.logging,org.apache.santuario.xmlsec,org.apache.xalan,org.apache.xerces" />
+			</manifest>
+		</jar>
+
+	</target>
+
+	<target name="package-ear" description="costruisce l'ear"
+		depends="clean-temp, clean-classes, compile-all, _package-jar">
+
+		<copy todir="${temp-config}/conf/ear" file="conf/ear/application.xml" />
+
+		<copy todir="${temp}/${target}/lib">
+			<!-- librerie infrastrutturali o client di servizi fruiti -->
+			<fileset dir="${lib}" includes="${ear.libs}" excludes="${excludes.libs}" />
+			<fileset dir="${build}/archives/${target}" includes="*client*.jar *common.jar" />
+		</copy>
+
+		<ear appxml="${temp-config}/conf/ear/application.xml" destfile="${build}/archives/${target}/${ui}.ear">
+			<fileset dir="${build}/archives/${target}" includes="*.jar,*.war, *.sar"
+				excludes="*client*.jar,*-common.jar" />
+			<fileset dir="${temp}/${target}">
+				<include name="**/*" />
+			</fileset>
+			<manifest>
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Built-Date" value="${DSTAMP}" />
+				<attribute name="Target" value="${target}" />
+			</manifest>
+		</ear>
+	</target>
+
+	<target name="deploy" depends="clean-all,init, package-ear">
+		<move file="${build}/archives/${target}/${ui}.ear" tofile="${build}/archives/${target}/${ui}.ear.tmp" />
+		<scp todir="${jboss.user}:${jboss.password}@${jboss.url}:${jboss.home}/"
+			file="${build}/archives/${target}/${ui}.ear.tmp" trust="true" />
+		<sshexec host="${jboss.url}" trust="yes" username="${jboss.user}"
+			password="${jboss.password}" command="mv ${jboss.home}/${ui}.ear.tmp ${jboss.home}/${ui}.ear" />
+	</target>
+
+	<target name="deploy-dev" depends="clean-all,init, package-ear">
+		<loadproperties srcfile="buildfiles/${user.name}.properties" />
+		<copy todir="${jboss_deploy_dir}" file="${build}/archives/${target}/${ui}.ear" />
+		<!-- <copy todir="${dist}/${target}" file="${build}/archives/${target}/${ui}.ear"></copy> -->
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - Target di configurazione per l'integrazione 
+		di coop-trace. l'inserimento dei PFH di tracciamento e' subordinato al valore 
+		dei flag seguenti, definiti in build.properties : 1) coopTracePAON (default 
+		a false, agisce sulla PA di Demografia) 2) coopTracePDON (default a false, 
+		agisce sulle PD di toponomastica, tarsu e gms) - - - - - - - - - - - - - 
+		- - - - -->
+	<target name="confCoopTrace">
+		<loadfile property="coopTraceConfigTmp" srcfile="${fileName}">
+			<filterchain>
+				<filterreader classname="org.apache.tools.ant.filters.ReplaceTokens">
+					<param type="token" name="interfaceName" value="${interfaceName}" />
+				</filterreader>
+			</filterchain>
+		</loadfile>
+		<condition property="coopTraceConfig" value="${coopTraceConfigTmp}">
+			<istrue value="${variableName}" />
+		</condition>
+		<condition property="coopTraceConfig" value="">
+			<or>
+				<isfalse value="${variableName}" />
+				<not>
+					<isset property="${variableName}">
+					</isset>
+				</not>
+			</or>
+		</condition>
+		<replace file="${fileXMLName}" token="@${tokenName}" value="${coopTraceConfig}" />
+	</target>
+
+	<target name="build-ear-deploy-local" depends="clean-all,init, package-ear"
+		description="Build e deploy JBOSS locale">
+		<loadproperties srcfile="buildfiles/${user.name}.properties" />
+		<copy todir="${jboss_deploy_dir}" file="${build}/archives/${target}/${ui}.ear" />
+	</target>
+
+</project>

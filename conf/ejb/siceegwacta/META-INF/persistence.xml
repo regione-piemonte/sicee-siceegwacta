@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    SPDX-License-Identifier: EUPL-1.2
+    Copyright Regione Piemonte - 2020
+ -->
+
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="SICEEGWACTA" transaction-type="JTA">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<jta-data-source>java:/SICEEGWACTA_DS</jta-data-source>
+
+
+<!-- 			<class>it.csi.sicee.siceegwsiape.integration.db.SiceeTSiape</class> -->
+<!-- 			<class>it.csi.sicee.siceegwsiape.integration.db.SiceeTSiapeLog</class> -->
+<!-- 			<class>it.csi.sicee.siceegwsiape.integration.db.SiceeTSiapePK</class> -->
+<!-- 		    <class>it.csi.sicee.siceegwsiape.integration.db.SiceeTCertificato</class> -->
+<!-- 			<class>it.csi.sicee.siceegwsiape.integration.db.SiceeTCertificatoPK</class> -->
+			
+			<class>it.csi.sicee.siceegwacta.integration.db.SiceeDStatoCert</class>
+			<class>it.csi.sicee.siceegwacta.integration.db.SiceeTActa</class>
+			<class>it.csi.sicee.siceegwacta.integration.db.SiceeTActaPK</class>
+			<class>it.csi.sicee.siceegwacta.integration.db.SiceeTActaLog</class>
+			<class>it.csi.sicee.siceegwacta.integration.db.SiceeTActaLogPK</class>
+			<class>it.csi.sicee.siceegwacta.integration.db.SiceeTCertificato</class>
+			<class>it.csi.sicee.siceegwacta.integration.db.SiceeTCertificatoPK</class>
+			<class>it.csi.sicee.siceegwacta.integration.db.SiceeTParametriActa</class>
+			<class>it.csi.sicee.siceegwacta.integration.db.SiceeDClasseEnergetica</class>
+			<class>it.csi.sicee.siceegwacta.integration.db.SiceeDDestUso2015</class>
+			<class>it.csi.sicee.siceegwacta.integration.db.SiceeTCertificatore</class>
+			<class>it.csi.sicee.siceegwacta.integration.db.SiceeTDatiEner2015</class>
+			<class>it.csi.sicee.siceegwacta.integration.db.SiceeTDatiEner2015PK</class>
+			<class>it.csi.sicee.siceegwacta.integration.db.SiceeTDatiGenerali</class>
+			<class>it.csi.sicee.siceegwacta.integration.db.SiceeTDatiGeneraliPK</class>
+			<class>it.csi.sicee.siceegwacta.integration.db.SiceeTRifIndex2015</class>
+				
+			
+<!-- 		<class>it.csi.sicee.siceegwsiape.integration.db.SiceeDDestUso2015</class> -->
+<!-- 		<class>it.csi.sicee.siceegwsiape.integration.db.SiceeRCombDener2015</class> -->
+<!-- 		<class>it.csi.sicee.siceegwsiape.integration.db.SiceeTAltreInfo</class> -->
+<!-- 		<class>it.csi.sicee.siceegwsiape.integration.db.SiceeTDaticatastSec</class> -->
+<!-- 		<class>it.csi.sicee.siceegwsiape.integration.db.SiceeTDatiEner2015</class> -->
+<!-- 		<class>it.csi.sicee.siceegwsiape.integration.db.SiceeTDatiGenerali</class> -->
+<!-- 		<class>it.csi.sicee.siceegwsiape.integration.db.SiceeTDatiXml2015</class> -->
+<!-- 		<class>it.csi.sicee.siceegwsiape.integration.db.SiceeTDetImp2015</class> -->
+<!-- 		<class>it.csi.sicee.siceegwsiape.integration.db.SiceeTQtaConsumi2015</class> -->
+<!-- 		<class>it.csi.sicee.siceegwsiape.integration.db.SiceeTRaccomand2015</class> -->
+
+
+		
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
+			<property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.temp.use_jdbc_metadata_defaults" value="false" />
+			<property name="hibernate.format_sql" value="true"/>
+			<property name="hibernate.use_sql_comments" value="true"/>
+        </properties>
+	</persistence-unit>
+</persistence>

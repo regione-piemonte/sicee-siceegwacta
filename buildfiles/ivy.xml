@@ -1,0 +1,170 @@
+<!--
+    SPDX-License-Identifier: EUPL-1.2
+    Copyright Regione Piemonte - 2020
+ -->
+ 
+<ivy-module version="1.0">
+
+	<info organisation="csipiemonte" module="siceegwacta" />
+
+	<dependencies>
+
+				<dependency org="apache" name="log4j" rev="1.2.8" />
+
+	<!-- versione patchate necessaria per usare coop-diag con JAAS e per usare il protocollo T3 di BEA WEBLOGIC -->
+    <!--dependency org="csipiemonte" name="weblogic-client" rev="2.0.1">
+      <artifact name="weblogic-client-2.0.1" type="jar" />
+      <artifact name="weblogic-client-ssl-2.0.1" type="jar" />
+    </dependency-->
+
+
+		
+		
+		<!--dependency org="apache" name="axis-ant" rev="1.4">
+			<artifact name="axis-ant-1.4" type="jar" />
+		</dependency-->
+		
+		<!--dependency org="doqui" name="dosign" rev="2.0.0">
+			<artifact name="dosign-common-2.0.0" type="jar"/>
+		</dependency-->
+		
+		<!-- dev (per generazione JAXB & CXF) -->
+		<dependency org="apache" name="commons-collections" rev="3.2.1" />
+		<dependency org="apache" name="commons-logging" rev="1.1.3" />
+		<dependency org="apache" name="cxf" rev="2.7.7" />
+		<dependency org="apache" name="neethi" rev="3.0.2" />
+		<dependency org="sun" name="jaxb" rev="2.2.6" />
+		<dependency org="apache" name="velocity" rev="1.7" />
+		<dependency org="codehaus" name="woodstox" rev="4.2.0" />
+		<dependency org="others" name="wsdl4j" rev="1.6.3" />
+		<dependency org="others" name="stax2-api" rev="3.1.1" />
+		<dependency org="apache" name="xmlschema-core" rev="2.0.3" />
+		<dependency org="apache" name="geronimo-javamail" rev="1.4">
+			<artifact  name="geronimo-javamail_1.4_spec-1.7.1" type="jar" />
+		</dependency>		
+		<dependency org="others" name="jboss" rev="eap-6.2">
+			<artifact name="jboss-interceptors-api_1.1_spec-1.0.1.Final-redhat-2" type="jar" />
+			<artifact name="jboss-ejb-api_3.1_spec-1.0.2.Final-redhat-2" type="jar" />
+			<exclude name="hibernate-jpa-2.0-api-1.0.1.Final-redhat-2" />
+			<exclude name="javax.inject-1.redhat-4" />
+			<exclude name="jboss-jaxrpc-api_1.1_spec-1.0.1.Final-redhat-3" />
+			<exclude name="jboss-jaxrs-api_1.1_spec-1.0.1.Final-redhat-2" />
+			<exclude name="jboss-servlet-api_3.0_spec-1.0.2.Final-redhat-1" />
+			<exclude name="mail-1.4.5-redhat-1" /> 
+		</dependency>
+
+		<!-- test -->
+		<dependency rev="4.7" name="junit" org="others" />
+		<dependency org="postgresql" name="postgresql-jdbc" rev="9.1-903.jdbc4" />
+		
+		<dependency org="others" name="hibernate-jpa-2.1-api" rev="1.0.0.Final" />
+
+
+		<!-- prod -->
+		<dependency org="csipiemonte" name="util-perf" rev="1.0.0" />
+		<dependency org="apache" name="commons-lang" rev="2.6"/>
+    	<dependency org="google" name="gson" rev="2.2.4"/>
+    	<!--dependency org="joda" name="joda-time" rev="1.6"/-->
+    	<dependency org="apache" name="commons-codec" rev="1.7"/>
+    	
+   		
+   		<!--dependency org="csipiemonte" name="iridev2" rev="2.0.0">
+      		<artifact name="iridev2-pep-intf-2.0.0" type="jar" />
+    	</dependency-->
+    	
+    	<!--dependency org="csipiemonte" name="csi" rev="1.2.5">
+      		<artifact name="csi-apachesoap-1.2.5" type="jar" />
+      	</dependency-->
+
+	<dependency org="redhat" name="jboss-annotations-api_1.1_spec" rev="1.0.1.Final-redhat-3">
+		<artifact name="jboss-annotations-api_1.1_spec-1.0.1.Final-redhat-3" type="jar" />
+	</dependency>
+	<dependency org="redhat" name="jboss-ejb3-ext-api" rev="2.1.0.redhat-1">
+		<artifact name="jboss-ejb3-ext-api-2.1.0.redhat-1" type="jar" />
+	</dependency>
+	<dependency org="csipiemonte" name="naoanpr-anprcommonlib" rev="1.0.0">
+		<artifact name="anprcommonlib-client-1.0.0" type="jar" />
+	</dependency>
+	<dependency org="csipiemonte" name="naoanpr-anprclient" rev="1.0.0">
+		<artifact name="anpr-client-cxf-1.0.0" type="jar" />
+		<artifact name="anprtest-client-cxf-1.0.0" type="jar" />
+	</dependency>
+	
+	<!--dependency org="csipiemonte" name="coop-diag" rev="1.2.1">
+			<artifact name="coop-diag-1.2.1" type="jar"/>
+	</dependency-->
+		
+		<dependency org="sun" name="jta" rev="1.0.1"/>
+		
+<dependency org="csipiemonte" name="csi" rev="1.4.5">
+			<artifact name="csi-apachesoap-1.4.5" type="jar"/>
+			<artifact name="csi-core-1.4.5" type="jar"/>
+			<artifact name="csi-ejb-1.4.5" type="jar"/>
+			<artifact name="csi-ejb-weblogic-1.4.5" type="jar"/>
+			<artifact name="csi-rmi-1.4.5" type="jar"/>
+			<artifact name="csi-stadapter-1.4.5" type="jar"/>
+			<artifact name="csi-tools-1.4.5" type="jar"/>
+		</dependency>
+				
+		<dependency org="apache" name="log4j" rev="1.2.15" >
+			<artifact name="log4j-1.2.15" type="jar" />
+		</dependency>
+		
+	<!-- ACTA -->
+		<dependency org="doqui" name="actasrv-client" rev="3.5.0" />
+		
+		<!-- DB - tmp -->
+		<!--dependency org="oracle" name="jdbc" rev="10.2.0.3.0"/-->
+		
+		<!-- MODOL -->
+		<dependency org="csipiemonte" name="modolsrv" rev="1.5.0" >
+		   <artifact name="modolsrv-client-1.5.0" type="jar" />
+		</dependency>
+		
+		<!-- MODOL pdf statico -->
+		<dependency org="csipiemonte" name="modolpdfgeneratorsrv-client" rev="1.2.0" >
+		   <artifact name="modolpdfgeneratorsrv-client-1.2.0" type="jar" />
+		</dependency>
+		
+		<dependency org="doqui" name="dosign" rev="2.0.0">
+			<artifact name="dosign-common-2.0.0" type="jar"/>
+		</dependency>
+			
+		<!-- INDEX -->
+		<!--dependency org="doqui" name="ecmenginebc-ws-client" rev="6.6.0">
+			<artifact name="ecmenginebc-ws-client-6.6.0" type="jar" />
+		</dependency-->
+		
+		<!--dependency org="doqui" name="ecmenginebc-common" rev="6.2.0">
+			<artifact name="ecmenginebc-common-6.2.0" type="jar" />
+		</dependency-->
+		
+		<!--dependency org="csipiemonte" name="axiscsi" rev="1.0.0">
+			<artifact name="axis-1.4.csi-1.0.0" type="jar" />
+		</dependency-->
+				
+		<!-- richiama sicee_ws nel caso non funzioni la mail -->
+		<dependency org="csipiemonte" name="siceews" rev="1.1.0" >
+			<artifact name="siceews-client-1.1.0" type="jar"/>
+		</dependency>
+		<dependency org="csipiemonte" name="axiscsi" rev="1.0.0" transitive="false"/>
+		
+		<dependency org="apache" name="axis" rev="1.4" transitive="false">
+    		<artifact name="axis-jaxrpc-1.4" type="jar" />
+    	</dependency>
+    	<dependency org="apache" name="commons-discovery" rev="0.2" transitive = "false"/>
+		
+		
+		<!-- Inserire qui le dipendenze aggiuntive -->
+		<dependency org="csipiemonte" name="siceeorch" rev="5.5.0" >
+			<artifact name="siceeorch-siceeorch-client-5.5.0" type="jar"/>
+		</dependency>
+		
+		<dependency org="csipiemonte" name="coop-diag" rev="1.2.1">
+			<artifact name="coop-diag-1.2.1" type="jar"/>
+		</dependency>
+		
+    <!--conflict manager="all"/-->		
+	</dependencies>
+
+</ivy-module>
