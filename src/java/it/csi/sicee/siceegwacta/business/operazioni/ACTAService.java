@@ -118,7 +118,9 @@ import javax.activation.CommandMap;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 import javax.activation.MailcapCommandMap;
+import javax.mail.Authenticator;
 import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -565,19 +567,47 @@ public class ACTAService {
 
 	}
 	
-	public static PagingResponseType cercaDocumentoArchiviatoByCertificato(ObjectIdType repositoryId, PrincipalIdType principalId, Certificato certificato) throws ACTAInvocationException {
+	public static PagingResponseType cercaDocumentoArchiviatoByCertificato(ObjectIdType catenerRepId, ObjectIdType volumeId, ObjectIdType repositoryId, PrincipalIdType principalId, Certificato certificato) throws ACTAInvocationException {
 
-		return cercaDocumentoArchiviato(repositoryId, principalId, certificato, null);
+		
+		log.info("[ACTAService::cercaDocumentoArchiviatoByCertificato] BEGIN");
+		
+		log.info("[ACTAService::cercaDocumentoArchiviatoByCertificato] catenerRepId: "+catenerRepId);
+		log.info("[ACTAService::cercaDocumentoArchiviatoByCertificato] volumeId: "+volumeId);
 
+		PagingResponseType response = cercaDocumentoArchiviato(volumeId, repositoryId, principalId, certificato, null);
+
+		/*
+		log.info("[ACTAService::cercaDocumentoArchiviatoByCertificato] Risultato ricerca x volumeId: : "+response);
+
+		log.info("[ACTAService::cercaDocumentoArchiviatoByCertificato] Risultato response.getObjectsLength(): : "+response.getObjectsLength());
+
+		log.info("[ACTAService::cercaDocumentoArchiviatoByCertificato] Stampo responde - BEGIN");
+
+		stampa(response);
+		
+		log.info("[ACTAService::cercaDocumentoArchiviatoByCertificato] Stampo responde - END");
+
+		if (response.getObjectsLength() == 0)
+		{
+			response = cercaDocumentoArchiviato(catenerRepId, repositoryId, principalId, certificato, null);
+
+			log.info("[ACTAService::cercaDocumentoArchiviatoByCertificato] Risultato ricerca x catenerRepId: : "+response);
+		}
+		*/
+		
+		log.info("[ACTAService::cercaDocumentoArchiviatoByCertificato] END");
+		
+		return response;
 	}
 	
-	public static PagingResponseType cercaDocumentoArchiviatoByIdDoc(ObjectIdType repositoryId, PrincipalIdType principalId, String idDocumento) throws ACTAInvocationException {
+	public static PagingResponseType cercaDocumentoArchiviatoByIdDoc(ObjectIdType catenerRepId, ObjectIdType repositoryId, PrincipalIdType principalId, String idDocumento) throws ACTAInvocationException {
 
-		return cercaDocumentoArchiviato(repositoryId, principalId, null, idDocumento);
+		return cercaDocumentoArchiviato(catenerRepId, repositoryId, principalId, null, idDocumento);
 		
 	}
 	
-	private static PagingResponseType cercaDocumentoArchiviato(ObjectIdType repositoryId, PrincipalIdType principalId, Certificato certificato, String idDocumento) throws ACTAInvocationException {
+	private static PagingResponseType cercaDocumentoArchiviato(ObjectIdType parentId, ObjectIdType repositoryId, PrincipalIdType principalId, Certificato certificato, String idDocumento) throws ACTAInvocationException {
 
 		log.debug("[ACTAService::cercaDocumentoArchiviato] BEGIN");
 
@@ -608,7 +638,16 @@ public class ACTAService {
 		
 		PropertyFilterType filter = getPropertyFilter(EnumPropertyFilter.LIST, new String[] { "","" }, new String[] { "objectId","idProtocolloList" }, null);
 		
-		pagingResponse = objectService.query(repositoryId, principalId, query, filter, criteria, null, null, null);
+		
+//		  catenerRepId = new ObjectIdType();
+//		  catenerRepId.setValue(GenericUtil.recuperaValParametro(paramActa, ACTAConstants.ID_SERIE_CATENER));
+		NavigationConditionInfoType nav = new NavigationConditionInfoType();
+		
+		nav.setParentNodeId(parentId);
+		nav.setLimitToChildren(false);
+		
+		
+		pagingResponse = objectService.query(repositoryId, principalId, query, filter, criteria, nav, null, null);
 		
 		/*
 		if (pagingResponse.getObjectsLength() > 0)
@@ -1314,13 +1353,24 @@ public class ACTAService {
 		
 		try {
 			java.util.Properties props = new java.util.Properties();        
+			
+//			props.put("mail.smtp.host", factory.getMailHost());
+//			props.put("mail.smtp.port", factory.getMailPort());
+//			props.put("mail.debug", "true"); // Aggiunto per verifica problema della Mail
+//
+//			Session session = Session.getDefaultInstance(props, null);
+
+			props.put("mail.transport.protocol", "smtp");
 			props.put("mail.smtp.host", factory.getMailHost());
+			props.put("mail.smtp.auth", "true");
 			props.put("mail.smtp.port", factory.getMailPort());
-			props.put("mail.debug", "true"); // Aggiunto per verifica problema della Mail
+			props.put("mail.smtp.starttls.enable", "true");
 
-			Session session = Session.getDefaultInstance(props, null);
+			Authenticator auth = new SMTPAuthenticator(factory.getMailUser(), factory.getMailPwd());
 
-
+			Session session=Session.getInstance(props,auth);
+			
+			
 			Message msg = new MimeMessage(session);
 			msg.setFrom(new InternetAddress(mail.getMittente()));
 			msg.setRecipient(Message.RecipientType.TO, new InternetAddress(mail.getDestinatario()));
@@ -1413,6 +1463,22 @@ public class ACTAService {
 			log.debug("[ACTAService::sendMail] END");
 		}
 
+	}
+
+	private class SMTPAuthenticator extends javax.mail.Authenticator {
+		
+		private String user;
+		private String pwd;
+		
+		public SMTPAuthenticator(String user, String pwd)
+		{
+			this.user = user;
+			this.pwd = pwd;
+		}
+		
+		public PasswordAuthentication getPasswordAuthentication() {
+			return new PasswordAuthentication(user, pwd);
+		}
 	}
 
 	private static void gestisciMimeTypes()

@@ -690,8 +690,9 @@ public class KronosMgrSessionBean {
 							  {
 								  // Devo archiviare il documento
 
+								  
 								  // per sicurezza prima lo cerco su ACTA, per essere sicuro che non ci sia. Ci potrebbe essere il caso (remoto) in cui il file e' stato archiviato ma c'e' stato un problema nell'aggiornamento del DB
-								  pagingResponse = actaSrv.cercaDocumentoArchiviatoByCertificato(repositoryId, principalId, certificato);
+								  pagingResponse = actaSrv.cercaDocumentoArchiviatoByCertificato(catenerRepId, volumeId, repositoryId, principalId, certificato);
 
 								  logger.debug("Stampo pagingResponse - recupera documento: "+pagingResponse);			
 								  logger.debug("Stampo pagingResponse.getObjectsLength() - recupera documento: "+pagingResponse.getObjectsLength());	
@@ -791,7 +792,7 @@ public class KronosMgrSessionBean {
 									  // quindi provo a recuperare la protocollazione, se non c'e' vuol dire che e' fallita la protocollazione, se invece c'e' vuol dire che e' fallito il salvataggio sul DB
 
 									// Devo recuperare nuovamente il DOC su ACTA per recuperare l'idProtocollo
-									  pagingResponse = actaSrv.cercaDocumentoArchiviatoByIdDoc(repositoryId, principalId, idDocumento);
+									  pagingResponse = actaSrv.cercaDocumentoArchiviatoByIdDoc(catenerRepId, repositoryId, principalId, idDocumento);
 									  
 									  // (*)
 									  // la Property idProtocolloList potrebbe ritornare una lista di protocolli,
@@ -851,7 +852,7 @@ public class KronosMgrSessionBean {
 									  logger.debug("[KronosMgrSessionBean::gestisciProtocollazioneACTA] - Acta ho protocollato!");
 
 									  // Devo recuperare nuovamente il DOC su ACTA per recuperare l'idProtocollo
-									  pagingResponse = actaSrv.cercaDocumentoArchiviatoByIdDoc(repositoryId, principalId, idDocumento);
+									  pagingResponse = actaSrv.cercaDocumentoArchiviatoByIdDoc(catenerRepId, repositoryId, principalId, idDocumento);
 
 									  // idProtocolloList puo' contenere piu' protocolli, quindi devo recuperare quello valido
 									  // Vedi nota sopra (*)

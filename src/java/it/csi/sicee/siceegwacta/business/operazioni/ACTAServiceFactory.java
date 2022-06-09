@@ -24,6 +24,8 @@ public class ACTAServiceFactory {
 
 	private String mailHost;
 	private String mailPort;
+	private String mailUser;
+	private String mailPwd;
 	private String actaHost;
 	private int actaPort = 0;
 	private String actaContext;
@@ -42,6 +44,8 @@ public class ACTAServiceFactory {
 		}
 		return mailHost;
 	}
+	
+	
 
 	public String getMailPort() throws Exception {
 		if (mailPort == null)
@@ -55,6 +59,34 @@ public class ACTAServiceFactory {
 
 		}
 		return mailPort;
+	}
+
+	public String getMailUser() throws Exception {
+		if (mailUser == null)
+		{
+			Properties properties = new Properties();
+			InputStream stream = this.getClass().getResourceAsStream("/contants.properties");
+			properties.load(stream);
+			mailUser = properties.getProperty("mail.user");
+			
+			log.debug("[ACTAServiceFactory::getMailUser] Stampo mailUser: "+mailUser);
+
+		}
+		return mailUser;
+	}
+	
+	public String getMailPwd() throws Exception {
+		if (mailPwd == null)
+		{
+			Properties properties = new Properties();
+			InputStream stream = this.getClass().getResourceAsStream("/contants.properties");
+			properties.load(stream);
+			mailPwd = properties.getProperty("mail.pwd");
+			
+			log.debug("[ACTAServiceFactory::getMailPwd] Stampo mailPwd: "+mailPwd);
+
+		}
+		return mailPwd;
 	}
 
 	public String getActaHost() {

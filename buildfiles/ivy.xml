@@ -116,16 +116,6 @@
 		<!-- DB - tmp -->
 		<!--dependency org="oracle" name="jdbc" rev="10.2.0.3.0"/-->
 		
-		<!-- MODOL -->
-		<dependency org="csipiemonte" name="modolsrv" rev="1.5.0" >
-		   <artifact name="modolsrv-client-1.5.0" type="jar" />
-		</dependency>
-		
-		<!-- MODOL pdf statico -->
-		<dependency org="csipiemonte" name="modolpdfgeneratorsrv-client" rev="1.2.0" >
-		   <artifact name="modolpdfgeneratorsrv-client-1.2.0" type="jar" />
-		</dependency>
-		
 		<dependency org="doqui" name="dosign" rev="2.0.0">
 			<artifact name="dosign-common-2.0.0" type="jar"/>
 		</dependency>

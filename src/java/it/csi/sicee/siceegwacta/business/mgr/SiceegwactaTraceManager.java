@@ -180,7 +180,7 @@ public class SiceegwactaTraceManager implements ISiceegwactaTraceManager {
 		
 		
 		
-		// FUUNZIONA
+		// FUNZIONA
 		StringBuffer qB = new StringBuffer();
 		qB.append("SELECT c FROM ");
 		qB.append(SiceeTCertificato.class.getName() + " c, "+ " "+SiceeTActa.class.getName()+ " a , "+SiceeTRifIndex2015.class.getName() + " i ");

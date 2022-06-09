@@ -220,6 +220,8 @@
 		<!-- REPLACE PER MAIL -->
 		<replace dir="${build}/classes" token="@mail.host@" value="${mail.host}" />
 		<replace dir="${build}/classes" token="@mail.port@" value="${mail.port}" />
+		<replace dir="${build}/classes" token="@mail.user@" value="${mail.user}" />
+		<replace dir="${build}/classes" token="@mail.pwd@" value="${mail.pwd}" />
 		<replace dir="${build}/classes" token="@siceews.url@" value="${siceews.url}" />
 
 		<!-- REPLACE PER MAIL -->
